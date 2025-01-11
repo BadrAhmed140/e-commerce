@@ -6,6 +6,16 @@ export let CartContext =createContext();
 const headers={
     token:window.localStorage.getItem('token')
 }
+
+
+//check out 
+function cashOnDelivery(carId,shippingAddress){
+    return axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${carId}`,
+        {shippingAddress},
+        {headers}
+    ).then(res=>res)
+    .catch(err=>err)
+}
 // add to card
 function addProductToCard(productId){
     
@@ -49,9 +59,9 @@ function updateItemFromCard(id,count){
 }
 export default function CartContextProvider({children}){
 
+let [cartId,setCartId]=useState(null);
 
-
-return <CartContext.Provider  value={{addProductToCard ,getCard,removeItemFromCard,updateItemFromCard}}>
+return <CartContext.Provider  value={{cartId,setCartId,addProductToCard ,getCard,removeItemFromCard,updateItemFromCard,cashOnDelivery}}>
 
 
 {children}

@@ -4,26 +4,34 @@ import styles from './Card.module.css'
 import { CounterContext } from '../../context/ContextContext'
 import { CartContext } from '../../context/CartContext'
 import { ClipLoader } from 'react-spinners'
+import { useNavigate } from 'react-router-dom'
 
 
 
 export default function Card() {
-let {getCard,removeItemFromCard,updateItemFromCard}=useContext(CartContext)
+let {getCard,removeItemFromCard,updateItemFromCard,setCartId,cartId}=useContext(CartContext)
 
 let [cart,setCart]=useState(null);
 let [loading,setLoading]=useState(true);
 let [loadingRemove,setLoadingRemove]=useState(false);
 let [items,setItems]=useState([]);
+let navigate =useNavigate();
+
 
 
 async function getCartInfo(){
 setLoading(true);
 let res = await getCard();
 console.log(res);
+setCartId(res.data.cartId);
 setCart(res.data);
 setLoading(false);
 }
 
+function navigateToCheckout(){
+  navigate(`/checkOut/${cartId}`);
+
+}
 
 async function removeItem(id){
   setLoadingRemove(true);
@@ -129,7 +137,9 @@ console.log(x)
     
     
     </tbody>
+
   </table>
+  <button className='btn '  onClick={()=>{navigateToCheckout()}}>Check Out</button>
 </div>
 }
 

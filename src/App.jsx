@@ -21,6 +21,8 @@ import ProductDetails from './components/ProductDetails/ProductDetails'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import CartContextProvider from './context/CartContext'
+import CheckOut from './components/CheckOut/CheckOut';
+import AllOrders from './components/AllOrders/AllOrders';
 
 
 
@@ -41,12 +43,14 @@ function App() {
  const x = createBrowserRouter([
    {path:"",element:<LayOut/> ,children:[
 
-    {path:"register",element:<ProdectedRoutes1><Register/></ProdectedRoutes1>},
-    {path:"login",element:<ProdectedRoutes1><Login/></ProdectedRoutes1>},
+     {path:"register",element:<ProdectedRoutes1><Register/></ProdectedRoutes1>},
+     {path:"login",element:<ProdectedRoutes1><Login/></ProdectedRoutes1>},
      {path:"home",element: <ProdectedRoutes><Home/></ProdectedRoutes>},
      {path:"card",element:<ProdectedRoutes><Card/></ProdectedRoutes>},
      {path:"brands",element:<ProdectedRoutes><Brands/></ProdectedRoutes>},
      {path:"categories",element:<ProdectedRoutes><Categories/></ProdectedRoutes>},
+     {path:"allOrders",element:<ProdectedRoutes><AllOrders/></ProdectedRoutes>},
+     {path:"checkOut/:cartId",element:<ProdectedRoutes><CheckOut/></ProdectedRoutes>},
      {path:"productDetails/:id/:categoryId",element:<ProdectedRoutes><ProductDetails/></ProdectedRoutes>},
      {path:"productDetails/:id",element:<ProdectedRoutes><ProductDetails/></ProdectedRoutes>},
      

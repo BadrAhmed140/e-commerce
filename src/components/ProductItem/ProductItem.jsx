@@ -27,7 +27,8 @@ useEffect(()=>{},[])
 
 </div>
 </Link>
-<button className='btn' onClick={()=>{addCard(product.id); /*changeItems(product.id)  setCurrentId(product.id)*/}}>
+<button className='btn' onClick={()=>{addCard(product.id);
+   /*changeItems(product.id)  setCurrentId(product.id)*/}}>
   {
   
   itemLoading && items[product.id] ?<i className="fa-solid fa-spinner"></i>: <span> Add to Card</span>}
