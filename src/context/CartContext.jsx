@@ -57,11 +57,21 @@ function updateItemFromCard(id,count){
     ).then(res=>res)
     .catch(err=>err)
 }
+
+
+//get all order 
+function getAllOrder(id){
+    return axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${id}`,
+        {headers},
+    ).then(res=>res)
+    .catch(err=>err)
+
+}
 export default function CartContextProvider({children}){
 
 let [cartId,setCartId]=useState(null);
 
-return <CartContext.Provider  value={{cartId,setCartId,addProductToCard ,getCard,removeItemFromCard,updateItemFromCard,cashOnDelivery}}>
+return <CartContext.Provider  value={{cartId,setCartId,addProductToCard ,getCard,removeItemFromCard,updateItemFromCard,cashOnDelivery,getAllOrder}}>
 
 
 {children}
