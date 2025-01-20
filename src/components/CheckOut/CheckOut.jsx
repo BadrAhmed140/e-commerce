@@ -11,13 +11,27 @@ export default function CheckOut() {
 let {cartId}=useParams();
 let [count,setCount]=useState(0)
 let{cashOnDelivery,}=useContext(CartContext)
+let [isOnlinePayment,setIsOnlinePayment]=useState(false)
+
+
 async function pay(){
+  let url =`https://ecommerce.routemisr.com/api/v1/orders/${cartId}`
+  if(isOnlinePayment){
+    url=`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:5173`
+  }
   console.log(cartId);
-let res = await cashOnDelivery(cartId,myForm.values);
+let res = await cashOnDelivery(url,myForm.values);
 
 if(res.data.status=="success"){
+console.log(res);
+if(isOnlinePayment){ 
+  window.location.href=res.data.session.url;
 
+}else{
   navigate('/allOrders');
+ }
+
+ 
 }else{
 
   console.log(res);
@@ -61,9 +75,12 @@ onSubmit:pay
         </div>
         <TextInput id="city" type="text"  onBlur={myForm.handleBlur} onChange={myForm.handleChange} value={myForm.values.city}   />
       </div>
-
+      <div>
+  <input type="checkbox" id="forOnline" className='m-3' onChange={()=>setIsOnlinePayment(!isOnlinePayment)}/>
+  <label htmlFor="forOnline" >Pay Online</label>
+</div>
       <Button onClick={pay} >
-       pay
+       {isOnlinePayment?"Pay On line":"COP"}
         </Button>
       </form>
 

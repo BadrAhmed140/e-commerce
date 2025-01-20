@@ -9,8 +9,8 @@ const headers={
 
 
 //check out 
-function cashOnDelivery(carId,shippingAddress){
-    return axios.post(`https://ecommerce.routemisr.com/api/v1/orders/${carId}`,
+function cashOnDelivery(url,shippingAddress){
+    return axios.post(url,
         {shippingAddress},
         {headers}
     ).then(res=>res)
