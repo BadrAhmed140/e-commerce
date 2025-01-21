@@ -11,7 +11,7 @@ export default function RecentProducts() {
 //state
 let [itemLoading,setItemLoading]=useState(false);
 let [currentId,setCurrentId]=useState(null)
-let {addProductToCard} =useContext( CartContext);
+let {addProductToCard,cardItemsNo,setcardItemsNo} =useContext( CartContext);
 
 let [items,setItems]=useState([]);
 
@@ -60,7 +60,10 @@ async function addToCard(id) {
     let data = await addProductToCard(id);
 
     if (data?.data?.status === "success") {
+      let newcardItemsNo=cardItemsNo+1;
+      setcardItemsNo(newcardItemsNo);
       toast.success(data.data.message);
+     
     } else {
       toast.error(data.response.data.message);
     }

@@ -15,7 +15,7 @@ import toast from 'react-hot-toast'
 
 export default function ProductDetails() {
   let [itemLoading,setItemLoading]=useState(false);
-  let {addProductToCard} =useContext(CartContext);
+  let {addProductToCard,cardItemsNo,setcardItemsNo} =useContext(CartContext);
   let {id}=useParams()
   let {categoryId}=useParams()
 
@@ -47,7 +47,10 @@ let [RelatedProducts ,setRelatedProducts] =useState([])
     let data =await addProductToCard(id_prod);
   
     if(data?.data?.status=="success"){
+      let newcardItemsNo=cardItemsNo+1;
+      setcardItemsNo(newcardItemsNo);
       toast.success(data.data.message);
+      
     }else{
       toast.error(data.response.data.message);
 

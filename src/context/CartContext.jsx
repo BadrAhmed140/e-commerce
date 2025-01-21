@@ -70,8 +70,8 @@ function getAllOrder(id){
 export default function CartContextProvider({children}){
 
 let [cartId,setCartId]=useState(null);
-
-return <CartContext.Provider  value={{cartId,setCartId,addProductToCard ,getCard,removeItemFromCard,updateItemFromCard,cashOnDelivery,getAllOrder}}>
+let [cardItemsNo,setcardItemsNo]=useState(null);
+return <CartContext.Provider  value={{cardItemsNo,setcardItemsNo,cartId,setCartId,addProductToCard ,getCard,removeItemFromCard,updateItemFromCard,cashOnDelivery,getAllOrder}}>
 
 
 {children}

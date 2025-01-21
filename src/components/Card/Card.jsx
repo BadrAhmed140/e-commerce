@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 export default function Card() {
-let {getCard,removeItemFromCard,updateItemFromCard,setCartId,cartId}=useContext(CartContext)
+let {cardItemsNo,setcardItemsNo,getCard,removeItemFromCard,updateItemFromCard,setCartId,cartId}=useContext(CartContext)
 
 let [cart,setCart]=useState(null);
 let [loading,setLoading]=useState(true);
@@ -26,6 +26,7 @@ console.log(res);
 setCartId(res.data.cartId);
 setCart(res.data);
 setLoading(false);
+setcardItemsNo(res.data.numOfCartItems);
 }
 
 function navigateToCheckout(){
@@ -49,7 +50,7 @@ async function removeItem(id){
   console.log(res);
   setLoadingRemove(false);
   setCart(res.data);
-  
+  setcardItemsNo(res.data.numOfCartItems);
   }
 
   async function updateItem(id,count){

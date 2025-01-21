@@ -1,4 +1,4 @@
-import { Children, useState } from 'react'
+import { Children, useContext, useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -20,15 +20,24 @@ import ProdectedRoutes1 from './components/prodectedRoutes1/prodectedRoutes1'
 import ProductDetails from './components/ProductDetails/ProductDetails'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import CartContextProvider from './context/CartContext'
+import  { CartContext } from './context/CartContext'
 import CheckOut from './components/CheckOut/CheckOut';
 import AllOrders from './components/AllOrders/AllOrders';
+import { data } from 'autoprefixer';
 
 
 
 
 function App() {
   let   query =new QueryClient();
+  let {cardItemsNo,setcardItemsNo,getCard}=useContext(CartContext);
+  
+  async function getCartInfo(){
+    let res = await getCard();
+    if(res.data){
+    setcardItemsNo(res.data.numOfCartItems);
+       }   }
+    useEffect(()=>{getCartInfo()},[])
 // const x = createBrowserRouter([
 // {path:"",element:<LayOut/>,Children:[
 //  {index:true,element:<Home/>},
@@ -74,10 +83,10 @@ console.log(resolvedPath);
 <QueryClientProvider client={query}>
   <UserTokenContextProvider>
       <CounterContextProvider>
-        <CartContextProvider>
+       
       <RouterProvider router={x}>
       </RouterProvider>
-      </CartContextProvider>
+    
       <Toaster />
       <ReactQueryDevtools></ReactQueryDevtools>
 </CounterContextProvider> 

@@ -3,9 +3,11 @@ import styles from './NavBar.module.css'
 import logo from '../../assets/images/logo.jpeg'
 import { NavLink, useNavigate} from 'react-router-dom'
 import { UserTokenContext   } from '../../context/userTokenContext'
+import {CartContext} from '../../context/CartContext'
 export default function NavBar() {
 let [count,setCount]=useState(0)
 let userToken=useContext(UserTokenContext)
+let {cardItemsNo,setcardItemsNo}=useContext(CartContext)
 let navigate =useNavigate();
 
 
@@ -54,6 +56,12 @@ null}
   <i className="fa-brands mx-1  fa-instagram"></i>
   <i className="fa-brands mx-1  fa-twitter"></i>
   </li>
+  <li className="relative mx-10 py-5">
+    <div className="absolute bg-green-800 p-1 text-white top-0 rounded-xl">{cardItemsNo}</div>
+  <i className="fa-solid fa-cart-shopping text-green-700 text-3xl" />
+
+  </li>
+ 
   {userToken.token?  
   <li>
   <button to={''}  onClick={signOut}>Sign Out</button>
