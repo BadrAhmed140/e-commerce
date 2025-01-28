@@ -23,11 +23,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import  { CartContext } from './context/CartContext'
 import CheckOut from './components/CheckOut/CheckOut';
 import AllOrders from './components/AllOrders/AllOrders';
-import { data } from 'autoprefixer';
-
-
-
-
 function App() {
   let   query =new QueryClient();
   let {cardItemsNo,setcardItemsNo,getCard}=useContext(CartContext);

@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import styles from './Card.module.css'
-
 import { CounterContext } from '../../context/ContextContext'
 import { CartContext } from '../../context/CartContext'
 import { ClipLoader } from 'react-spinners'
@@ -9,16 +7,17 @@ import { useNavigate } from 'react-router-dom'
 
 
 export default function Card() {
-let {cardItemsNo,setcardItemsNo,getCard,removeItemFromCard,updateItemFromCard,setCartId,cartId}=useContext(CartContext)
+let {clearCard,setcardItemsNo,getCard,removeItemFromCard,updateItemFromCard,setCartId,cartId}=useContext(CartContext)
 
 let [cart,setCart]=useState(null);
 let [loading,setLoading]=useState(true);
+let [noCard,setNoCard]=useState('');
 let [loadingRemove,setLoadingRemove]=useState(false);
 let [items,setItems]=useState([]);
 let navigate =useNavigate();
 
 
-
+//get caed
 async function getCartInfo(){
 setLoading(true);
 let res = await getCard();
@@ -28,12 +27,12 @@ setCart(res.data);
 setLoading(false);
 setcardItemsNo(res.data.numOfCartItems);
 }
-
+//navigateToCheckout
 function navigateToCheckout(){
   navigate(`/checkOut/${cartId}`);
 
 }
-
+//removeItem
 async function removeItem(id){
   setLoadingRemove(true);
   
@@ -52,7 +51,7 @@ async function removeItem(id){
   setCart(res.data);
   setcardItemsNo(res.data.numOfCartItems);
   }
-
+//updateItem
   async function updateItem(id,count){
    
     let res = await updateItemFromCard(id,count);
@@ -60,6 +59,16 @@ async function removeItem(id){
     setCart(res.data);
     
     }
+//clear Card
+async function removeCard(){
+   
+  let res = await clearCard();
+
+  getCartInfo();
+  
+  }
+
+
 
 
 useEffect(()=>{getCartInfo()},[])
@@ -69,9 +78,12 @@ console.log(x)
   return (
   <>
 
-{loading ?  <div className="flex w-full justify-center">
+{
+loading ? 
+ <div className="flex w-full justify-center">
   <ClipLoader/>
-  </div>: <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+  </div>
+  : <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
   <h1 className='text-5xl text-green-500 font-bold my-5 text-center'>Shipping Cart</h1>
   <div className="flex justify-between my-6 px-7  ">
     <h2 className='text-2xl text-green-500'>Total Cart Item : {cart.numOfCartItems} </h2>
@@ -130,15 +142,15 @@ console.log(x)
         </td>
         <td className="px-6 py-4">
           {loadingRemove&& items[product.product._id]?<div className="flex w-full justify-center">
-  <ClipLoader/>
-  </div>:          <button className="font-medium text-red-600 dark:text-red-500 hover:underline" onClick={()=>removeItem(product.product._id)}>Remove</button>
+  <               ClipLoader/>
+  </div>:<button className="font-medium text-red-600 dark:text-red-500 hover:underline" onClick={()=>removeItem(product.product._id)}>Remove</button>
 }
         </td>
       </tr>)}
     
     
     </tbody>
-
+    <button className='text-white w-full rounded m-1 p-1 bg-red-700'  onClick={()=>{removeCard()}}>Clear Card</button>
   </table>
   <button className='btn '  onClick={()=>{navigateToCheckout()}}>Check Out</button>
 </div>

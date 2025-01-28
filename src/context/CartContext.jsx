@@ -67,11 +67,22 @@ function getAllOrder(id){
     .catch(err=>err)
 
 }
+
+
+
+//clear card 
+function clearCard(){
+    return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`,
+        {headers},
+    ).then(res=>res)
+    .catch(err=>err)
+
+}
 export default function CartContextProvider({children}){
 
 let [cartId,setCartId]=useState(null);
 let [cardItemsNo,setcardItemsNo]=useState(null);
-return <CartContext.Provider  value={{cardItemsNo,setcardItemsNo,cartId,setCartId,addProductToCard ,getCard,removeItemFromCard,updateItemFromCard,cashOnDelivery,getAllOrder}}>
+return <CartContext.Provider  value={{clearCard,cardItemsNo,setcardItemsNo,cartId,setCartId,addProductToCard ,getCard,removeItemFromCard,updateItemFromCard,cashOnDelivery,getAllOrder}}>
 
 
 {children}
